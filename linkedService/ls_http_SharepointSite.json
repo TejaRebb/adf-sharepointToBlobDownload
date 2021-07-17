@@ -1,0 +1,13 @@
+{
+	"name": "ls_http_SharepointSite",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://trebb.sharepoint.com/sites/trebb-TeamsSharepointTest/_api/web/GetFileByServerRelativeUrl('/sites/trebb-TeamsSharepointTest/Shared%20Documents/TeamsSharepointTest/test_sql.sql')/$value",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

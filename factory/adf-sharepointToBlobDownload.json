@@ -1,0 +1,9 @@
+{
+	"name": "adf-sharepointToBlobDownload",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "14bc732e-2fc4-4724-9eb0-0de3330cc32b",
+		"tenantId": "ab5189c8-91ac-4598-af3d-5a572bed3309"
+	}
+}

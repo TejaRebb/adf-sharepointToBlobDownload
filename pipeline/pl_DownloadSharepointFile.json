@@ -1,0 +1,87 @@
+{
+	"name": "pl_DownloadSharepointFile",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Access Token",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://accounts.accesscontrol.windows.net/ab5189c8-91ac-4598-af3d-5a572bed3309/tokens/OAuth/2",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"body": "grant_type=client_credentials&client_id=4b2a5b5f-90be-4fcc-a58f-679ea5f268bf@ab5189c8-91ac-4598-af3d-5a572bed3309&client_secret=eH9SpS6iUrE8B6Sdz8iKjqJIcTh2ptWJQHrFuj8HAnA=&resource=00000003-0000-0ff1-ce00-000000000000/trebb.sharepoint.com@ab5189c8-91ac-4598-af3d-5a572bed3309"
+				}
+			},
+			{
+				"name": "copy file from Sharepoint to Blob",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Get Access Token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET",
+							"additionalHeaders": {
+								"value": "@{concat('Authorization: Bearer ', activity('Get Access Token').output.access_token)}",
+								"type": "Expression"
+							},
+							"requestTimeout": ""
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_binary_Sharepoint",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_sink",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-06-27T21:49:41Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

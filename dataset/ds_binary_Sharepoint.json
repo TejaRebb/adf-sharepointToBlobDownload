@@ -1,0 +1,17 @@
+{
+	"name": "ds_binary_Sharepoint",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_http_SharepointSite",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
